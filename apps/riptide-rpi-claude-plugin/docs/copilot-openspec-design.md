@@ -1,6 +1,6 @@
 # Core RPI for VS Code GitHub Copilot and OpenSpec
 
-**Status:** Design proposal with representative, copyable files. This document does not install agents, skills, or OpenSpec configuration in this repository. The examples are not a complete starter kit: the remaining agents, skills, and artifact templates still need to be authored.
+**Status:** Approved design reference. The [portable starter kit](../copilot-openspec/README.md) implements the full agent/skill roster, schema, templates, installer, and automated CLI checks. This document's inline examples remain representative excerpts; use the kit for the complete files. Neither the design nor the kit directory activates agents, skills, or OpenSpec configuration in this repository's root workspace.
 
 **Scope:** Research questions → objective research → design/specifications → phased plan → implementation and verification. Separate PRD/TDD workflows, worktree automation, commits, and PR creation are out of scope.
 

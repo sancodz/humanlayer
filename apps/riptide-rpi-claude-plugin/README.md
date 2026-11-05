@@ -13,6 +13,8 @@ Research-Plan-Implement workflow for Linear tickets with Claude Code.
 
 Say "set up rpi" to verify the plugin is working and validate prerequisites.
 
-## Workflow design
+## VS Code Copilot and OpenSpec
 
-[Core RPI for VS Code GitHub Copilot and OpenSpec](docs/copilot-openspec-design.md) maps the RPI skills and bundled agents to a proposed Copilot workflow, with representative schema, agent, and skill files. It is a design proposal, not an installed integration.
+The [portable RPI starter kit](copilot-openspec/README.md) contains ten Copilot agents, six explicit-only skills, the OpenSpec schema and all seven templates, a no-overwrite installer, and isolated validation tests. It does not activate or replace this repository's existing Claude workflow.
+
+The [approved workflow design](docs/copilot-openspec-design.md) explains the source mapping, artifact model, research boundaries, and human review checkpoints.
