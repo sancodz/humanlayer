@@ -1,0 +1,44 @@
+{
+  "formatVersion": 1,
+  "openspecVersion": "1.16.0",
+  "schema": "rpi",
+  "coordinators": [
+    "rpi-intake",
+    "rpi-researcher",
+    "rpi-planner",
+    "rpi-implementer"
+  ],
+  "workers": [
+    "codebase-locator",
+    "codebase-analyzer",
+    "codebase-pattern-finder",
+    "web-search-researcher",
+    "implementer-agent",
+    "implementation-reviewer"
+  ],
+  "skills": [
+    "rpi-questions",
+    "rpi-research",
+    "rpi-design",
+    "rpi-plan",
+    "rpi-implement",
+    "rpi-verify"
+  ],
+  "supportFiles": [
+    ".github/rpi/LICENSE",
+    ".github/rpi/NOTICE",
+    ".github/rpi/workflow.md",
+    ".github/rpi/artifact-procedure.md",
+    ".github/rpi/records.md",
+    ".github/rpi/snapshot.mjs",
+    "openspec/config.yaml",
+    "openspec/schemas/rpi/schema.yaml",
+    "openspec/schemas/rpi/templates/research-questions.md",
+    "openspec/schemas/rpi/templates/research.md",
+    "openspec/schemas/rpi/templates/proposal.md",
+    "openspec/schemas/rpi/templates/spec.md",
+    "openspec/schemas/rpi/templates/design.md",
+    "openspec/schemas/rpi/templates/plan.md",
+    "openspec/schemas/rpi/templates/tasks.md"
+  ]
+}

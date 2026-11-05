@@ -1,0 +1,9 @@
+schema: rpi
+context: |
+  Use the repository's documented coding conventions and validation commands.
+  Project context describes the repository, not the current change request.
+rules:
+  research:
+    - Describe existing behavior with source evidence; do not recommend changes.
+  plan:
+    - Make every phase independently verifiable and include its tests.

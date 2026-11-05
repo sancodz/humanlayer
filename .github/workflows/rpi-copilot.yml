@@ -1,0 +1,41 @@
+name: RPI Copilot starter kit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'apps/riptide-rpi-claude-plugin/copilot-openspec/**'
+      - 'apps/riptide-rpi-claude-plugin/docs/copilot-openspec-design.md'
+      - 'apps/riptide-rpi-claude-plugin/README.md'
+      - '.github/workflows/rpi-copilot.yml'
+  push:
+    branches: [main, dev]
+    paths:
+      - 'apps/riptide-rpi-claude-plugin/copilot-openspec/**'
+      - '.github/workflows/rpi-copilot.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      DO_NOT_TRACK: '1'
+      CI: 'true'
+    defaults:
+      run:
+        working-directory: apps/riptide-rpi-claude-plugin/copilot-openspec
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate bundle, installer, and scope snapshots
+        run: bun test test/unit
+      - name: Exercise the pinned OpenSpec CLI in isolated projects
+        run: bun tools/test-openspec.mjs
