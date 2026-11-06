@@ -1,0 +1,85 @@
+name: rpi
+version: 1
+description: Evidence-first research, reviewed planning, and phased implementation
+artifacts:
+  - id: research-questions
+    generates: research-questions.md
+    description: A descriptive investigation plan
+    template: research-questions.md
+    instruction: |
+      Use intake to ask how the system works today, not how to change it.
+      Preserve exact context pointers. Include existing testing patterns and,
+      for frontend work, the design system. Do not embed proposed solutions.
+    requires: []
+
+  - id: research
+    generates: research.md
+    description: Evidence-backed documentation of the current system
+    template: research.md
+    instruction: |
+      Read only the research questions as change-specific input.
+      Document current behavior, data flow, tests, and factual unknowns.
+      Verify citations against source. Do not read request.md or propose fixes.
+    requires: [research-questions]
+
+  - id: proposal
+    generates: proposal.md
+    description: Change intent and affected capabilities
+    template: proposal.md
+    instruction: |
+      Combine the user request with research. Write Why, What Changes,
+      Capabilities (new and modified), and Impact. Inspect existing specs
+      before naming capabilities. Do not invent behavior to satisfy tooling.
+    requires: [research]
+
+  - id: specs
+    generates: "specs/**/*.md"
+    description: Capability-level behavioral delta specifications
+    template: spec.md
+    instruction: |
+      Write a delta for each affected capability using ADDED, MODIFIED,
+      REMOVED, or RENAMED Requirements sections as appropriate.
+      Requirements use SHALL or MUST and have at least one scenario.
+      Scenario headings use exactly four hashes and include WHEN and THEN.
+      A MODIFIED requirement includes its complete updated requirement block.
+      New capabilities include a meaningful Purpose section.
+    requires: [proposal]
+
+  - id: design
+    generates: design.md
+    description: Technical choices for user review
+    template: design.md
+    instruction: |
+      Explain the target architecture, alternatives, risks, and testing approach.
+      Keep material choices open until the user explicitly decides.
+      Record accepted decisions and rationale without inventing approval.
+    requires: [research, proposal, specs]
+
+  - id: plan
+    generates: plan.md
+    description: A detailed, vertically phased implementation plan
+    template: plan.md
+    instruction: |
+      Require user resolution of material design questions before planning.
+      Include concrete files, changes, tests, and runnable checks per phase.
+      Separate automated verification from human acceptance. Do not code.
+    requires: [design]
+
+  - id: tasks
+    generates: tasks.md
+    description: Trackable tasks grouped by implementation phase
+    template: tasks.md
+    instruction: |
+      Derive numbered N.Y checkbox tasks from plan.md without adding scope.
+      Include verification in each task. Keep phase numbers aligned with the
+      plan. Human approvals belong in approvals.md, not inferred checkmarks.
+    requires: [plan]
+
+apply:
+  requires: [research-questions, research, proposal, specs, design, plan, tasks]
+  tracks: tasks.md
+  instruction: |
+    Require approval of the current design and plan before changing source.
+    Implement only the selected phase and run its automated checks.
+    Record actual results, leave human acceptance pending, and stop for review.
+    Do not commit, push, switch branches, or archive without explicit instruction.
