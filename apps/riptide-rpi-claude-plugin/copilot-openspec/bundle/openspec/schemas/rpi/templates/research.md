@@ -17,23 +17,27 @@ This report describes the codebase as it exists. It does not recommend changes o
 
 ## Summary
 
-[Explain the main behavior, architectural relationships, and data flow.]
+[Synthesize the main behavior, architectural relationships, and data flow in focused paragraphs. The report must be self-contained: a reader should understand the researched area without replaying the investigation.]
 
 ## Findings
 
+<!-- Organize by behavior/concept, not by file or as a question-by-question answer list. Every section and important sub-point uses a takeaway header stating what is true, not a topic label or restated question. Preserve technical depth; remove repetition rather than necessary explanation. -->
+
 ### 1. [A takeaway stating how the existing system works]
 
-[Coherent explanation supported by exact file:line ranges. Use focused diagrams, tables, call paths, or pseudocode when they clarify the existing system. No proposed diffs or implementation suggestions.]
+[Lead with the concept, then give a coherent explanation supported by exact file:line ranges. Every material claim is traceable to source or an attributable external document; label inference and uncertainty. Keep paragraphs short and place each visual beside the prose it explains.]
+
+<!-- Choose only useful views: tables for comparisons/config; sequence/data-flow diagrams; important call-stack trees; responsibility file trees; frontend component/state trees; type/endpoint/message/schema shapes; pseudocode for complex logic. Describe current state only—no proposed diffs or change markers. -->
 
 #### Existing testing patterns
 
-[Unit/integration/e2e files, fixtures/mocks, actual documented verification commands, and what they currently cover. State search scope and uncertainty if no tests were found; do not claim tests ran unless they did.]
+[Test file locations, unit/integration/e2e approach, mocks, fixtures/utilities, actual documented verification commands, and current coverage for this finding. If no tests were found, state that and the search scope; do not claim proven absence or test execution without evidence.]
 
-<!-- Repeat finding/test sections as needed, grouped by behavior rather than a file index. -->
+<!-- Repeat finding/test sections as needed. Connect cross-component behavior and architectural relationships instead of producing a file index. -->
 
 ## Code references
 
-[Grouped key files and exact line references; state whether the list is exhaustive or illustrative.]
+[Comprehensive grouped files/directories and exact line references sufficient to navigate the researched area. State whether each group's coverage is exhaustive or illustrative.]
 
 ## External documentation
 
@@ -41,4 +45,4 @@ This report describes the codebase as it exists. It does not recommend changes o
 
 ## Open factual questions
 
-[Genuine unanswered questions about how the current system works, with investigation limits, or None. Do not ask what should be built.]
+[Genuine unanswered questions about how the current system works, with investigation limits, or None. Do not ask what should be built. On revision, integrate answers into the relevant findings and remove only answered questions; do not append an edit changelog.]

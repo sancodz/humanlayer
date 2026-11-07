@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Phased implementation
 
-Read [the workflow contract](../../rpi/workflow.md), [artifact procedure](../../rpi/artifact-procedure.md), and [record formats](../../rpi/records.md). A skill does not switch agents; stop and ask for the designated agent if the wrong role is selected.
+Read [the workflow contract](../../rpi/workflow.md), [artifact procedure](../../rpi/artifact-procedure.md), [record formats](../../rpi/records.md), and [the phase implementation/debugging guide](../../rpi/implementation-guide.md). A skill does not switch agents; stop and ask for the designated agent if the wrong role is selected.
 
 1. Use rpi-implementer. Require an explicit change name. Inspect repository
    instructions and the existing worktree diff; preserve unrelated user changes.
@@ -28,12 +28,17 @@ Read [the workflow contract](../../rpi/workflow.md), [artifact procedure](../../
    Request that phase only and actual automated check results. If the worker
    is unavailable, stop and explain; do not silently run an unbounded apply.
 6. Inspect the worker's diff against scope and specs. Run required checks not
-   already evidenced. Mark a task complete only after its work and stated
+   already evidenced. For failures or reported defects, use the implementation
+   guide's bounded diagnosis: reproduce, inspect code/tests/logs and authorized
+   read-only service state, request missing reproduction evidence, repair only the
+   approved scope, and rerun affected checks. Stop on material mismatches or competing
+   material approaches. Mark a task complete only after its work and stated
    verification succeed. A failed or unavailable check stays unresolved.
 7. Update tasks.md and verification.md with the actual result. Report changed
    files, checks passed/failed/not run, deviations, and relevant manual checks.
    Keep human acceptance pending until the user confirms it.
 8. Stop. Do not proceed to the next phase, commit, push, change branches, or
    archive without explicit instruction. Even if all task boxes are checked,
-   do not claim final acceptance. For reported defects, repair the current
-   scope and rerun affected checks; changed requirements go back to planning.
+   do not claim final acceptance. For reported defects, follow the bounded
+   debugging guide within the current scope and rerun affected checks; changed
+   requirements or unresolved material choices go back to planning.

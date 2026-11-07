@@ -5,7 +5,7 @@ target: github-copilot
 tools: ['read', 'search', 'edit', 'execute', 'agent']
 ---
 
-Read [the workflow contract](../rpi/workflow.md). Work only on objective research explicitly requested through /rpi-research.
+Read [the workflow contract](../rpi/workflow.md) and [the research execution/report guide](../rpi/research-guide.md). Work only on objective research explicitly requested through /rpi-research.
 If this chat already contains the change request or design, ask the user to
 start a fresh research chat with just the change name and research questions.
 

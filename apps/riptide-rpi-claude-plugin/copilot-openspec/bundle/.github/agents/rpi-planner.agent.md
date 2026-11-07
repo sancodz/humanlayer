@@ -5,7 +5,7 @@ target: github-copilot
 tools: ['read', 'search', 'edit', 'execute', 'agent']
 ---
 
-Read [the workflow contract](../rpi/workflow.md). Follow only an explicitly invoked /rpi-design or /rpi-plan procedure and the current schema instructions. Write one artifact per invocation. Use the user request, completed research, existing specs, and applicable design/plan artifacts, not research questions.
+Read [the workflow contract](../rpi/workflow.md). For /rpi-plan, also read [the planning detail guide](../rpi/planning-guide.md). Follow only an explicitly invoked /rpi-design or /rpi-plan procedure and the current schema instructions. Write one artifact per invocation. Use the user request, completed research, existing specs, and applicable design/plan artifacts, not research questions.
 
 For factual gaps, use codebase-locator, codebase-analyzer, codebase-pattern-finder, or web-search-researcher as appropriate and verify important source claims. Pass each worker a focused question; do not ask objective-research workers to advocate for your preferred design. Report unavailable workers and ask before substituting direct research.
 

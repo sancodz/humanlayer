@@ -130,6 +130,92 @@ describe('portable bundle contract', () => {
 		expect((await template('spec')).match(/^#### Scenario:/gm)).toHaveLength(1)
 	})
 
+	test('execution guides are shipped and explicitly linked by their consumers', async () => {
+		const consumers = {
+			'research-guide.md': [
+				'.github/agents/rpi-researcher.agent.md',
+				'.github/agents/codebase-locator.agent.md',
+				'.github/agents/codebase-analyzer.agent.md',
+				'.github/agents/codebase-pattern-finder.agent.md',
+				'.github/skills/rpi-research/SKILL.md',
+			],
+			'web-research.md': ['.github/agents/web-search-researcher.agent.md', '.github/rpi/research-guide.md'],
+			'planning-guide.md': ['.github/agents/rpi-planner.agent.md', '.github/skills/rpi-plan/SKILL.md'],
+			'implementation-guide.md': [
+				'.github/agents/rpi-implementer.agent.md',
+				'.github/agents/implementer-agent.agent.md',
+				'.github/skills/rpi-implement/SKILL.md',
+			],
+		}
+		for (const [guide, paths] of Object.entries(consumers)) {
+			expect(manifest.supportFiles).toContain(`.github/rpi/${guide}`)
+			for (const path of paths) expect(await readFile(join(bundle, path), 'utf8')).toContain(guide)
+		}
+	})
+
+	test('research instructions require a deep explainer, not an answer list or file index', async () => {
+		const guide = await readFile(join(bundle, '.github/rpi/research-guide.md'), 'utf8')
+		expect(guide).toContain('not a question-by-question answer list or a file index')
+		expect(guide).toContain('takeaway headers')
+		expect(guide).toContain('Verify every source citation')
+		expect(guide).toContain('exhaustive or illustrative')
+		expect(guide).toContain('testing patterns')
+		expect(guide).toContain('2–6')
+		expect(guide).toContain('one additional focused pass')
+		expect(schema.artifacts.find((artifact) => artifact.id === 'research').instruction).toContain('self-contained technical explainer')
+		expect(await readFile(join(bundle, 'openspec/schemas/rpi/templates/research.md'), 'utf8')).toContain('self-contained')
+	})
+
+	test('planning derives its outline internally and requires concrete sketches and tests', async () => {
+		const skill = await readFile(join(bundle, '.github/skills/rpi-plan/SKILL.md'), 'utf8')
+		const guide = await readFile(join(bundle, '.github/rpi/planning-guide.md'), 'utf8')
+		const template = await readFile(join(bundle, 'openspec/schemas/rpi/templates/plan.md'), 'utf8')
+		const instruction = schema.artifacts.find((artifact) => artifact.id === 'plan').instruction
+		expect(skill).not.toContain('incorporate the structural outline')
+		expect(skill).toContain('inside `plan.md`')
+		expect(guide).toContain('no separate structure-outline artifact or prerequisite')
+		expect(guide).toContain('every material code or contract change')
+		expect(guide).toContain('concrete test cases or skeletons')
+		expect(instruction).toContain('code/contract sketch')
+		expect(template).toContain('### Concrete changes')
+		expect(template).toContain('### Test detail')
+		expect(template).toContain('required concrete code/contract sketch')
+	})
+
+	test('revision feedback is inventoried, verified, and integrated without authorizing code', async () => {
+		const procedure = await readFile(join(bundle, '.github/rpi/artifact-procedure.md'), 'utf8')
+		expect(procedure).toContain('## Revision checklist')
+		expect(procedure).toContain('each requested correction/addition')
+		expect(procedure).toContain('Verify factual corrections against source')
+		expect(procedure).toContain('rather than appending a changelog')
+		expect(procedure).toContain('newly surfaced material questions')
+		expect(procedure).toContain('Planning feedback never authorizes code')
+		for (const skill of ['rpi-research', 'rpi-design', 'rpi-plan']) {
+			expect(await readFile(join(bundle, `.github/skills/${skill}/SKILL.md`), 'utf8')).toContain('revision checklist')
+		}
+	})
+
+	test('debugging is evidence-driven and bounded by approved scope', async () => {
+		const guide = await readFile(join(bundle, '.github/rpi/implementation-guide.md'), 'utf8')
+		expect(guide).toContain('Reproduce and capture evidence')
+		expect(guide).toContain('local logs')
+		expect(guide).toContain('read-only database/service diagnostics')
+		expect(guide).toContain('within the approved scope')
+		expect(guide).toContain('Rerun the failed check')
+		expect(guide).toContain('multiple material approaches')
+		expect(await readFile(join(bundle, '.github/skills/rpi-implement/SKILL.md'), 'utf8')).toContain('bounded diagnosis')
+	})
+
+	test('web research has a bounded search/fetch strategy without shell tooling', async () => {
+		const guide = await readFile(join(bundle, '.github/rpi/web-research.md'), 'utf8')
+		expect(guide).toContain('2–3')
+		expect(guide).toContain('3–5')
+		expect(guide).toContain('Refine once')
+		expect(guide).toContain('exact URLs')
+		expect(guide).toContain('pinned version')
+		expect(guide).not.toMatch(/\bcurl\b|\bBash\b/)
+	})
+
 	test('local Markdown references resolve and the bundle has no Claude runtime dependencies', async () => {
 		for (const path of bundlePaths(manifest).filter((path) => path.endsWith('.md'))) {
 			const content = await readFile(join(bundle, path), 'utf8')

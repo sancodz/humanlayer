@@ -12,6 +12,10 @@
 
 [Explain ownership, data flow, contracts/data shapes, and interactions. Use focused before/after views where useful. Normative observable behavior remains in specs.]
 
+## Existing patterns to follow
+
+[Source-backed conventions that constrain the choices. Include focused existing-code snippets or contract shapes where they materially help the user decide; distinguish observed patterns from proposed target shapes.]
+
 ## Design questions
 
 <!-- Initially keep ALL material choices open, even when one option is recommended. Only actual user feedback resolves them. Questions that alter specs/architecture/task breakdown must be resolved before planning. -->

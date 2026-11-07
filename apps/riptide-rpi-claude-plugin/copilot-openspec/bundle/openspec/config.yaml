@@ -5,5 +5,7 @@ context: |
 rules:
   research:
     - Describe existing behavior with source evidence; do not recommend changes.
+    - Write a self-contained explainer with traceable citations and testing patterns per finding.
   plan:
     - Make every phase independently verifiable and include its tests.
+    - Require concrete code/contract sketches and test cases or skeletons for material changes.

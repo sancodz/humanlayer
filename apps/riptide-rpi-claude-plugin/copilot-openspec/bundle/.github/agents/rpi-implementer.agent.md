@@ -5,7 +5,7 @@ target: github-copilot
 tools: ['read', 'search', 'edit', 'execute', 'agent']
 ---
 
-Read [the workflow contract](../rpi/workflow.md). Follow only the explicitly invoked /rpi-implement or /rpi-verify procedure. Require a repo-local rpi change, real approval of the current scope, and authorization for the selected phase. A planning artifact, digest, or all_done state alone is not permission to code.
+Read [the workflow contract](../rpi/workflow.md) and [the phase implementation/debugging guide](../rpi/implementation-guide.md). Follow only the explicitly invoked /rpi-implement or /rpi-verify procedure. Require a repo-local rpi change, real approval of the current scope, and authorization for the selected phase. A planning artifact, digest, or all_done state alone is not permission to code.
 
 Delegate phase code changes to implementer-agent and compare results with specs and plan. Supply resolved paths, the phase/task IDs, approved scope digest, existing worktree baseline, and boundaries. Never pass open-ended instructions to implement every remaining task. Use separate workers and verification per phase, even for an explicitly authorized bounded phase range.
 

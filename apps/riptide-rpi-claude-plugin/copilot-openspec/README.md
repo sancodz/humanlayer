@@ -2,7 +2,7 @@
 
 A portable implementation of the [approved core RPI design](../docs/copilot-openspec-design.md): research questions → objective research → reviewed proposal/specs/design → detailed vertical-phase plan/tasks → phased implementation → verification.
 
-The kit contains **10 custom agents**, **6 explicit-only skills**, a **7-artifact OpenSpec schema with all templates**, shared workflow/record guidance, and a planning-scope fingerprint helper. Nothing in this directory activates HumanLayer's root workspace. Install into a project only when you choose to.
+The kit contains **10 custom agents**, **6 explicit-only skills**, a **7-artifact OpenSpec schema with all templates**, shared workflow/record guidance, four detailed execution guides, and a planning-scope fingerprint helper. Nothing in this directory activates HumanLayer's root workspace. Install into a project only when you choose to.
 
 ## Requirements
 
@@ -78,6 +78,12 @@ Shared contracts are installed under `.github/rpi/`:
 - [Workflow boundaries and phase/approval rules](bundle/.github/rpi/workflow.md).
 - [Single-artifact procedure](bundle/.github/rpi/artifact-procedure.md), which fetches templates from OpenSpec rather than copying them into skills.
 - [Request, approval, and verification record formats](bundle/.github/rpi/records.md).
+- [Research execution and report quality](bundle/.github/rpi/research-guide.md): decomposition, worker evidence, self-contained narrative, visuals, citations, testing depth, and cohesive revision.
+- [Bounded web research](bundle/.github/rpi/web-research.md): version anchoring, search/fetch budgets, refinement, and attributable evidence without shell tooling.
+- [Planning detail](bundle/.github/rpi/planning-guide.md): derive the outline inside `plan.md`, then require concrete code/contract sketches and test cases/skeletons for material changes.
+- [Phase implementation and debugging](bundle/.github/rpi/implementation-guide.md): context gathering, reproduction, logs/read-only diagnostics, bounded repairs, and reruns.
+
+The artifact procedure also includes a shared revision checklist: inventory and verify feedback, integrate it into the owning artifact, keep new material questions open, and identify stale downstream review. Agent bodies stay compact and explicitly read the relevant guide; the installer ships every guide in its manifest.
 
 Intake stores user intent in change-local `request.md`; objective research never reads that file or runs the snapshot helper. Switching agents in the same conversation does not erase intent: start a fresh research chat containing only the change name/questions. Source and test findings need verifiable citations; unavailable tools/sources remain explicit gaps.
 
@@ -104,7 +110,9 @@ The review gates are **advisory instructions plus human supervision**, not enfor
 Automated tests below exercise files, installation, digests, and the actual CLI. They cannot establish that a model follows instructions. Before real use, run a small two-phase change in VS Code and check:
 
 - Ten agents and six explicit-only skills are discovered without frontmatter errors; hidden workers delegate by exact name with the expected tools.
-- Fresh research sees only questions/source pointers and returns no implementation suggestions.
+- Fresh research sees only questions/source pointers and returns no implementation suggestions; its report is a self-contained explainer with traceable citations, useful visuals, and testing depth rather than an answer list/file index.
+- Plans derive their outline inside `plan.md` and include concrete code/contract sketches and test cases/skeletons for material changes.
+- Revisions address each feedback item, integrate affected sections cohesively, and reopen downstream review; web research and debugging stay bounded and evidence-driven.
 - Design choices remain open until actual feedback, and planning feedback does not start coding.
 - Missing/stale approval, a failed/unavailable check, a missing worker, a mismatched plan, or an ambiguous change causes a clear stop.
 - A phase stops for acceptance/continuation and does not mark manual checks passed or move on automatically.

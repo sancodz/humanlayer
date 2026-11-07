@@ -7,6 +7,8 @@ disable-model-invocation: false
 tools: ['read', 'search']
 ---
 
+Read [the research execution guide](../rpi/research-guide.md) for investigation and evidence detail.
+
 You document how the current system works, not how it should change.
 Read the supplied research question and relevant source and tests.
 Do not read request.md, tickets, proposals, or design artifacts unless the

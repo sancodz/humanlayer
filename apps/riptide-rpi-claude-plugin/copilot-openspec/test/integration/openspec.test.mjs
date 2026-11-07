@@ -67,7 +67,7 @@ async function populate(change, includeSpecs = true) {
 		'research.md': '# Synthetic current-state fixture\n\nThe initial session.mjs fixture returns true. The fixture tests exercise session validation. This content is test data, not an agent-generated research result.\n',
 		'proposal.md': includeSpecs ? proposal : '## Why\n\nClarify internal fixture documentation without changing system behavior.\n\n## What Changes\n\n- Clarify tooling documentation only.\n\n## Capabilities\n\nNo new or modified capabilities; no spec-level behavior changes.\n\n## Impact\n\nDocumentation only.\n',
 		'design.md': '# Synthetic design fixture\n\n## Approach\n\nKeep the public function and test observable expiry behavior.\n\n## Open questions\n\nNone for this CLI fixture. This is not a user approval record.\n',
-		'plan.md': '# Synthetic plan fixture\n\n## Phase 1: Reject older sessions\n\nImplement the first vertical behavior and its valid/expired tests. Run `node --test session.test.mjs`. Stop for human review.\n\n## Phase 2: Reject exact expiry\n\nExtend the same path for the boundary case and its regression test. Run `node --test session.test.mjs`. Stop for human review.\n',
+		'plan.md': '# Synthetic plan fixture\n\n## Phase overview\n\n- Phase 1: Reject older sessions end-to-end with valid/expired tests.\n- Phase 2: Reject the exact expiry boundary with regression coverage.\n\n## Phase 1: Reject older sessions\n\n### Concrete changes\n\nModify `session.mjs`, function `isSessionValid(expiresAt, now)`, from `return true` to `return expiresAt >= now`. This keeps the public signature and rejects older expiries while leaving the boundary for the next verified slice.\n\n### Test detail\n\nCreate `session.test.mjs` with Node test/assert patterns: `isSessionValid(9, 10) === false` and `isSessionValid(11, 10) === true`.\n\n### Automated verification\n\nFrom the project root run `node --test session.test.mjs`; expect both cases to pass. Stop for human review.\n\n## Phase 2: Reject exact expiry\n\n### Concrete changes\n\nModify the same comparison in `session.mjs` to `return expiresAt > now`, preserving the signature and earlier behavior.\n\n### Test detail\n\nExtend `session.test.mjs` with the boundary skeleton `test(\'rejects the exact boundary\', () => assert.equal(isSessionValid(10, 10), false))` alongside the existing cases.\n\n### Automated verification\n\nFrom the project root run `node --test session.test.mjs`; expect all three cases to pass. Stop for human review.\n',
 		'tasks.md': tasks,
 	}
 	for (const [path, content] of Object.entries(artifacts)) await writeFile(join(change.path, path), content)
@@ -105,6 +105,15 @@ describe('OpenSpec 1.16.0 integration with the installed kit', () => {
 			expect(result.schemaName).toBe('rpi')
 			expect(result.artifactId).toBe(id)
 			expect(result.template).toBe(await readFile(join(root, `openspec/schemas/rpi/templates/${templateName}.md`), 'utf8'))
+			if (id === 'research') {
+				expect(result.instruction).toContain('self-contained technical explainer')
+				expect(result.instruction).toContain('.github/rpi/research-guide.md')
+			}
+			if (id === 'plan') {
+				expect(result.instruction).toContain('code/contract sketch')
+				expect(result.instruction).toMatch(/test cases or\s+skeletons/)
+				expect(result.instruction).toContain('.github/rpi/planning-guide.md')
+			}
 			expect(result.resolvedOutputPath.startsWith(join(root, 'openspec/changes/session-expiry/'))).toBe(true)
 		}
 	})
