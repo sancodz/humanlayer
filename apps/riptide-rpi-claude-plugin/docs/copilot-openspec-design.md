@@ -1,6 +1,6 @@
 # Core RPI for VS Code GitHub Copilot and OpenSpec
 
-**Status:** Approved design reference. The [portable starter kit](../copilot-openspec/README.md) implements the full agent/skill roster, schema, templates, installer, and automated CLI checks. This document's inline examples remain representative excerpts; use the kit for the complete files. Neither the design nor the kit directory activates agents, skills, or OpenSpec configuration in this repository's root workspace.
+**Status:** Approved design reference. The [portable starter kit](../copilot-openspec/README.md) implements the full agent/skill roster, schema, templates, installer, and automated CLI checks. This document's inline examples mirror selected shipped files; use the kit for the complete roster and execution guides. Neither the design nor the kit directory activates agents, skills, or OpenSpec configuration in this repository's root workspace.
 
 **Scope:** Research questions → objective research → design/specifications → phased plan → implementation and verification. Separate PRD/TDD workflows, worktree automation, commits, and PR creation are out of scope.
 
@@ -74,6 +74,17 @@ The source revision reviewed is `f9bd73534a9fb7099a274f951b698b1297122fd9`. See 
 `/rpi-verify` is an **adaptation**, not an existing plugin skill with the same name. The source implementation reviewer reports plan deviations for PR descriptions; final verification additionally checks requirement coverage and validation evidence.
 
 Creation and iteration can share a skill. If the output already exists, require an explicit revision request. Revise the owning document in place and identify downstream artifacts that need review; never silently start implementation in response to planning feedback.
+
+### Execution detail and progressive disclosure
+
+Compact agent identities do not replace the source workflow's domain-specific guidance. The kit ships explicit-read guides under `.github/rpi/` and links them from the relevant agents and skills:
+
+- `research-guide.md` restores decomposition heuristics, worker evidence contracts, self-contained narrative/takeaway headers, visual selection, comprehensive citations, per-finding testing depth, and cohesive revision.
+- `web-research.md` restores version anchoring and a bounded search/fetch/refinement strategy while retaining read/search/web-only tools.
+- `planning-guide.md` derives the phase outline **inside `plan.md`**—there is no separate outline prerequisite—and requires concrete code/contract sketches and test cases/skeletons for material changes.
+- `implementation-guide.md` restores context gathering and a bounded reproduce → inspect logs/state → repair within scope → rerun procedure.
+
+The shared artifact procedure's revision checklist requires a feedback inventory, source verification, in-place integration rather than an edit changelog, explicit handling of new material questions, and downstream review. These guides preserve the existing approval/evidence gates; they do not grant new permissions. Schema instructions and templates retain the core quality requirements, while the custom skills explicitly load the fuller guides.
 
 ### Proposed agent roster
 
@@ -178,8 +189,10 @@ context: |
 rules:
   research:
     - Describe existing behavior with source evidence; do not recommend changes.
+    - Write a self-contained explainer with traceable citations and testing patterns per finding.
   plan:
     - Make every phase independently verifiable and include its tests.
+    - Require concrete code/contract sketches and test cases or skeletons for material changes.
 ```
 
 When adapting this to HumanLayer, validation commands come from the repository's instructions: `bun --bun run typecheck`, `bun --bun run quality`, and `bun run test`. Respect its service-test setup requirements; do not replace them with direct package test commands. Other projects should supply their own real commands.
@@ -207,8 +220,13 @@ artifacts:
     template: research.md
     instruction: |
       Read only the research questions as change-specific input.
-      Document current behavior, data flow, tests, and factual unknowns.
-      Verify citations against source. Do not read request.md or propose fixes.
+      Write a self-contained technical explainer, not a question-by-question
+      answer list or file index. Use takeaway headers, traceable citations,
+      appropriate visuals, comprehensive grouped references, and testing
+      patterns under each finding. Document current behavior, data flow,
+      and factual unknowns. Verify citations against source. Do not read
+      request.md or propose fixes. When using the installed RPI kit, read
+      `.github/rpi/research-guide.md` for execution and revision detail.
     requires: [research-questions]
 
   - id: proposal
@@ -250,8 +268,12 @@ artifacts:
     template: plan.md
     instruction: |
       Require user resolution of material design questions before planning.
-      Include concrete files, changes, tests, and runnable checks per phase.
-      Separate automated verification from human acceptance. Do not code.
+      Derive a compact vertical-phase outline inside plan.md, then expand it;
+      no separate outline artifact is required. Include exact files, a concrete
+      code/contract sketch for every material change, concrete test cases or
+      skeletons, and runnable checks per phase. Separate automated verification
+      from human acceptance. Do not code. When using the installed RPI kit,
+      read `.github/rpi/planning-guide.md` for the required detail.
     requires: [design]
 
   - id: tasks
@@ -270,7 +292,10 @@ apply:
   instruction: |
     Require approval of the current design and plan before changing source.
     Implement only the selected phase and run its automated checks.
-    Record actual results, leave human acceptance pending, and stop for review.
+    When using the installed RPI kit, read `.github/rpi/implementation-guide.md`.
+    Diagnose failures within the approved scope, rerun affected checks after
+    repairs, and stop on material mismatches. Record actual results, leave human acceptance
+    pending, and stop for review.
     Do not commit, push, switch branches, or archive without explicit instruction.
 ```
 
@@ -306,7 +331,7 @@ target: github-copilot
 tools: ['read', 'search', 'edit', 'execute', 'agent']
 ---
 
-Work only on objective research explicitly requested through /rpi-research.
+Read [the workflow contract](../rpi/workflow.md) and [the research execution/report guide](../rpi/research-guide.md). Work only on objective research explicitly requested through /rpi-research.
 If this chat already contains the change request or design, ask the user to
 start a fresh research chat with just the change name and research questions.
 
@@ -316,7 +341,7 @@ Use Copilot's native delegation tool, not Claude Agent/Task syntax or Local's
 agent/runSubagent. Pass descriptive questions and source pointers, not task intent.
 Await all workers and verify important claims in source before synthesizing.
 
-Use execute only for necessary OpenSpec queries and read-only metadata commands.
+Use execute only for necessary OpenSpec queries and read-only metadata commands. Do not run the planning snapshot helper here: it reads intent-bearing files.
 Write only the selected research artifact; never change application source.
 If a required worker or tool is unavailable, report that limitation and ask
 whether to proceed with direct research rather than claiming delegation occurred.
@@ -335,6 +360,8 @@ user-invocable: false
 disable-model-invocation: false
 tools: ['read', 'search']
 ---
+
+Read [the research execution guide](../rpi/research-guide.md) for investigation and evidence detail.
 
 You document how the current system works, not how it should change.
 Read the supplied research question and relevant source and tests.
@@ -358,6 +385,8 @@ user-invocable: false
 disable-model-invocation: false
 tools: ['read', 'search', 'edit', 'execute']
 ---
+
+Read [the phase implementation/debugging guide](../rpi/implementation-guide.md) before editing or diagnosing failures.
 
 Require the change directory, plan path, phase number, exact task IDs, and
 confirmation from the coordinator that the current plan revision was approved.
@@ -391,6 +420,8 @@ disable-model-invocation: true
 
 # Objective research
 
+Read [the workflow contract](../../rpi/workflow.md), [artifact procedure](../../rpi/artifact-procedure.md), [record formats](../../rpi/records.md), and [the research execution/report guide](../../rpi/research-guide.md). A skill does not switch agents; stop and ask for the designated agent if the wrong role is selected.
+
 1. Use rpi-researcher in a fresh chat containing no original change request.
    Require one explicit change name; ask rather than guessing among changes.
 2. Run `openspec status --change <change-name> --json`. Require schema rpi and
@@ -402,18 +433,24 @@ disable-model-invocation: true
    Read the research-questions dependency completely. Do not read request.md,
    proposal, design, or implementation plans. Stop if project context contains
    task intent that would compromise the objective-research boundary.
-4. Delegate independent areas to the named research workers. Group related
-   questions; use web research only when needed. Workers return source evidence
-   and uncertainties, not recommendations. Report unavailable tools/sources.
-5. Await every worker, verify important citations, and synthesize the system's
-   current behavior, data flow, and existing testing patterns. Make at most one
-   additional focused pass for unresolved questions, then document remaining gaps.
-6. Write only to resolvedOutputPath from the instruction response. Gather real
+4. Apply the research guide's decomposition strategy: locate unknown areas first,
+   then analyze promising paths and existing patterns. Group related questions,
+   parallelize independent areas, and use the 2–6 worker heuristic only when warranted.
+   Use web research when needed under its bounded procedure. Workers return source
+   evidence and uncertainties, not recommendations. Report unavailable tools/sources.
+5. Await every worker and verify every source citation used in the report. Synthesize
+   a self-contained technical explainer with takeaway headers, appropriate visuals,
+   comprehensive grouped references, and testing patterns under each finding—not a
+   question-by-question answer list or file index. Make at most one additional focused
+   pass for unresolved questions, integrate answers into affected sections, and document gaps.
+6. Do not run the planning snapshot helper during objective research: it reads request and design inputs. Write only to resolvedOutputPath from the instruction response. Gather real
    date, branch, and commit metadata; do not leave invented values or placeholders.
 7. Re-read the result and refresh status. Report the output path, factual gaps,
    and that research is ready for review. Do not create the proposal or code.
-   On revision, identify downstream documents requiring renewed review; OpenSpec
-   will not automatically mark them stale.
+   On revision, follow the shared revision checklist: address each feedback item,
+   rework affected sections cohesively rather than appending a changelog, and update
+   citations, tests, metadata, and answered open questions. Identify downstream review;
+   OpenSpec will not automatically mark documents stale.
 ````
 
 ### `.github/skills/rpi-implement/SKILL.md`
@@ -428,6 +465,8 @@ disable-model-invocation: true
 
 # Phased implementation
 
+Read [the workflow contract](../../rpi/workflow.md), [artifact procedure](../../rpi/artifact-procedure.md), [record formats](../../rpi/records.md), and [the phase implementation/debugging guide](../../rpi/implementation-guide.md). A skill does not switch agents; stop and ask for the designated agent if the wrong role is selected.
+
 1. Use rpi-implementer. Require an explicit change name. Inspect repository
    instructions and the existing worktree diff; preserve unrelated user changes.
 2. Run `openspec status --change <change-name> --json` and
@@ -436,26 +475,31 @@ disable-model-invocation: true
    invalid JSON, blocked state, or unresolved warnings affecting readiness.
    Consume current project context and applicable operation guidance. Read the
    returned contextFiles needed for implementation, excluding research-questions.
-3. Read approvals.md and require actual approval of the current design/plan/tasks
-   revision. Ask if approval is absent or stale. Resolve material contradictions
+3. Run `node .github/rpi/snapshot.mjs "<resolved-change-directory>"` and check readiness separately. Read approvals.md and require actual approval of the current design/plan/tasks
+   scope digest and explicit authorization of the selected phase(s). Progress-only N.Y checkbox edits retain scope; changes to task text or other planning inputs require renewed approval. Ask if approval is absent or stale. Resolve material contradictions
    between the specs, design, plan, and code before editing anything.
 4. Select only the requested phase, or the first pending phase when prior phase
-   acceptance is recorded. Match task IDs N.Y to Phase N in plan.md. If apply says
+   acceptance and explicit continuation are recorded for the checked code. Match task IDs N.Y to Phase N in plan.md. If apply says
    all_done, report remaining verification/acceptance instead of inventing tasks.
 5. Delegate to implementer-agent using Copilot's native delegation. Supply the
-   resolved change/plan paths, phase number, task IDs, and approved revision.
+   resolved change/plan paths, phase number, task IDs, approved scope digest, code comparison baseline, and boundaries. For an explicitly authorized bounded phase sequence, use a separate worker and automated checks per phase and pause after that sequence; stop earlier on any failure.
    Request that phase only and actual automated check results. If the worker
    is unavailable, stop and explain; do not silently run an unbounded apply.
 6. Inspect the worker's diff against scope and specs. Run required checks not
-   already evidenced. Mark a task complete only after its work and stated
+   already evidenced. For failures or reported defects, use the implementation
+   guide's bounded diagnosis: reproduce, inspect code/tests/logs and authorized
+   read-only service state, request missing reproduction evidence, repair only the
+   approved scope, and rerun affected checks. Stop on material mismatches or competing
+   material approaches. Mark a task complete only after its work and stated
    verification succeed. A failed or unavailable check stays unresolved.
 7. Update tasks.md and verification.md with the actual result. Report changed
    files, checks passed/failed/not run, deviations, and relevant manual checks.
    Keep human acceptance pending until the user confirms it.
 8. Stop. Do not proceed to the next phase, commit, push, change branches, or
    archive without explicit instruction. Even if all task boxes are checked,
-   do not claim final acceptance. For reported defects, repair the current
-   scope and rerun affected checks; changed requirements go back to planning.
+   do not claim final acceptance. For reported defects, follow the bounded
+   debugging guide within the current scope and rerun affected checks; changed
+   requirements or unresolved material choices go back to planning.
 ````
 
 The final `/rpi-verify` procedure should use the same current CLI inputs, request a fresh `implementation-reviewer` comparison against the supplied diff and artifacts, map each spec scenario to test/manual evidence, run outstanding checks, and write a consolidated report. Its outcomes should distinguish **verified**, **failed**, and **blocked/not run**. It must not treat skipped checks as passing or let the reviewer approve its own design changes.
@@ -526,7 +570,9 @@ These require the actual editor/runtime; CLI schema validation cannot establish 
 - All ten agents and six skills are discovered without frontmatter errors in the Copilot harness.
 - Hidden workers can be delegated to by exact name; they cannot edit/run commands unless their listed tools allow it.
 - Stage skills remain explicit-only, and selecting a skill does not unexpectedly change the agent's tools.
-- A fresh research run does not receive request/design text and produces no proposed implementation.
+- A fresh research run does not receive request/design text and produces no proposed implementation; the report reads as a self-contained technical explainer with traceable citations, appropriate visuals, and testing patterns per finding.
+- Planning derives its outline inside `plan.md` and provides concrete code/contract sketches and test cases/skeletons rather than prose-only change descriptions.
+- Revision feedback is inventoried and integrated cohesively; web search and defect investigation remain bounded and evidence-driven.
 - Writing a design document does not resolve its questions or approve the plan automatically.
 - A phase run stops after checks, leaves manual acceptance pending, and does not start the next phase.
 - Missing approvals, stale artifacts, failed tests, unavailable workers, and material code/plan mismatches stop work clearly.

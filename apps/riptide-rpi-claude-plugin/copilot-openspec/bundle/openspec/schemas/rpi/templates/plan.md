@@ -17,7 +17,7 @@
 - Phase 1: [Smallest independently verifiable end-to-end outcome.]
 - Phase 2: [Next independently verifiable outcome.]
 
-<!-- Use as many phases as the change needs. Keep phases vertical: include the code/contracts, tests, and docs each slice needs. No duplicate implementation checkboxes here; tasks.md is the execution ledger. -->
+<!-- Derive this compact outline inside plan.md, then expand every phase below; no separate structure-outline artifact is required. Use as many phases as the change needs. Keep phases vertical and independently verifiable without a later phase. No duplicate implementation checkboxes here; tasks.md is the execution ledger. -->
 
 ## Phase 1: [Outcome]
 
@@ -25,9 +25,13 @@
 
 [One concrete result this phase makes possible without depending on a later phase.]
 
-### Changes and tests
+### Concrete changes
 
-[Exact affected files, concrete code/contracts/data changes, existing patterns to follow, tests/fixtures, and documentation needed for this slice. Use focused snippets/trees only where useful.]
+[For every material code/contract change: exact file path and create/modify/remove action, relevant symbol or stable anchor, and a required concrete code/contract sketch—focused diff, signature/type/data/schema/config change, or precise pseudocode. Show enough context, behavior/error/edge cases, compatibility constraints, and the existing pattern with a source reference. “Update the logic” is incomplete; full function bodies/file dumps are not required. For docs/tooling-only work, show the actual affected sections/configuration/commands.]
+
+### Test detail
+
+[Name new/changed test files and provide concrete test cases or skeletons following existing patterns: setup/fixture, action, expected assertion/result. Map affected spec scenarios and important regressions; explain any manual-only coverage. Include tests and needed docs with this slice, not a later catch-all phase.]
 
 ### Automated verification
 
@@ -43,9 +47,13 @@
 
 [Next vertical outcome.]
 
-### Changes and tests
+### Concrete changes
 
-[Concrete changes, tests, and documentation this phase requires.]
+[Repeat the required file-level code/contract sketches and existing-pattern references for every material change in this phase.]
+
+### Test detail
+
+[Concrete test files and cases/skeletons for this slice, mapped to scenarios and regressions.]
 
 ### Automated verification
 

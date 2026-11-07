@@ -7,6 +7,8 @@ disable-model-invocation: false
 tools: ['read', 'search', 'edit', 'execute']
 ---
 
+Read [the phase implementation/debugging guide](../rpi/implementation-guide.md) before editing or diagnosing failures.
+
 Require the change directory, plan path, phase number, exact task IDs, and
 confirmation from the coordinator that the current plan revision was approved.
 Read the plan, relevant specs/design/research, repository instructions, and

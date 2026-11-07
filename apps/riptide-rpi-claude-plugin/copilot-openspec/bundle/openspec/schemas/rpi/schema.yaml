@@ -18,8 +18,13 @@ artifacts:
     template: research.md
     instruction: |
       Read only the research questions as change-specific input.
-      Document current behavior, data flow, tests, and factual unknowns.
-      Verify citations against source. Do not read request.md or propose fixes.
+      Write a self-contained technical explainer, not a question-by-question
+      answer list or file index. Use takeaway headers, traceable citations,
+      appropriate visuals, comprehensive grouped references, and testing
+      patterns under each finding. Document current behavior, data flow,
+      and factual unknowns. Verify citations against source. Do not read
+      request.md or propose fixes. When using the installed RPI kit, read
+      `.github/rpi/research-guide.md` for execution and revision detail.
     requires: [research-questions]
 
   - id: proposal
@@ -61,8 +66,12 @@ artifacts:
     template: plan.md
     instruction: |
       Require user resolution of material design questions before planning.
-      Include concrete files, changes, tests, and runnable checks per phase.
-      Separate automated verification from human acceptance. Do not code.
+      Derive a compact vertical-phase outline inside plan.md, then expand it;
+      no separate outline artifact is required. Include exact files, a concrete
+      code/contract sketch for every material change, concrete test cases or
+      skeletons, and runnable checks per phase. Separate automated verification
+      from human acceptance. Do not code. When using the installed RPI kit,
+      read `.github/rpi/planning-guide.md` for the required detail.
     requires: [design]
 
   - id: tasks
@@ -81,5 +90,8 @@ apply:
   instruction: |
     Require approval of the current design and plan before changing source.
     Implement only the selected phase and run its automated checks.
-    Record actual results, leave human acceptance pending, and stop for review.
+    When using the installed RPI kit, read `.github/rpi/implementation-guide.md`.
+    Diagnose failures within the approved scope, rerun affected checks after
+    repairs, and stop on material mismatches. Record actual results, leave human acceptance
+    pending, and stop for review.
     Do not commit, push, switch branches, or archive without explicit instruction.
